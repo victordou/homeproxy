@@ -805,10 +805,6 @@ config.route = {
 		{
 			inbound: 'dns-in',
 			action: 'hijack-dns'
-		},
-		{
-			inbound: 'direct-proxy-in',
-			outbound: 'main-out'
 		}
 		/*
 		 * leave for sing-box 1.13.0
@@ -830,6 +826,12 @@ if (!isEmpty(main_node)) {
 		server: (routing_mode === 'bypass_mainland_china') ? 'china-dns' : 'default-dns',
 		strategy: (ipv6_support !== '1') ? 'prefer_ipv4' : null
 	};
+
+	/* Direct-proxy-in rule */
+	push(config.route.rules, {
+		inbound: 'direct-proxy-in',
+		outbound: 'main-out'
+	});
 
 	/* Direct list */
 	if (length(direct_domain_list))
